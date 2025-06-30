@@ -3,24 +3,20 @@
 set -euo pipefail # Bash options to stop script on error (See set manpage).
 shopt -s extglob # Korn shell globbing.
 
-casa='/home/visita8Jau' # User home.
+casa='/home/estudiante' # User home.
 
 clean(){
-	echo "Phase One - Bleachbit"
 	notify-send "Phase One" "Bleachbit"
-	bleachbit --clean brave.* chromium.* \
-		firefox.* google_chrome.* java.* \
-		libreoffice.* opera.* palemoon.* \
-		seamonkey.* system.cache system.clipboard \
-		system.recent_documents system.tmp system.trash \
-		vlc.* zoom.*
-	echo "Phase Two - rm"
+	bleachbit --clean firefox.* google_chrome.* \
+		libreoffice.* system.cache system.clipboard \
+		system.recent_documents system.tmp system.trash
 	notify-send "Phase Two" "rm"
+	mv $casa/Clases $casa/.Clases
 	rm -rf !($casa/.*)
-	echo "Phase Three - Recreate common User directories"
 	notify-send "Phase Three" "Recreate common User directories"
 	xdg-user-dirs-update
-	echo "Completed"
+	xdg-user-dirs-update --force 
+	mv $casa/.Clases $casa/Clases
 	notify-send "Completed" "Cleaning routine has ended"
 }
 
@@ -28,8 +24,12 @@ clean(){
 install-prerequisites(){
 	cp $0 /usr/local/bin/umfs.sh # Copy this script.
 	chmod 755 /usr/local/bin/umfs.sh # The Script can't be read by the User, and can't be modified inside the system.
-	apt install -y bleachbit xdg-user-dir libreoffice # Put other Group one programs here.
-	echo "@reboot        visita8Jau /usr/local/bin/umfs.sh -c" >> /etc/crontab # Add script to crontab.
+	sudo apt install -y bleachbit xdg-user-dirs \
+		cron libreoffice build-essential # Put other Group one programs here.
+	echo "/usr/local/bin/umfs.sh -c" >> $casa/.profile # Add script to login.
+	sudo chattr +i $casa/.profile # Make file undeletable for the normal user.
+	mkdir $casa/Clases # Basic User folder
+	# curl "https://example.com/wall.jpg" -o $casa/Clases/.wall.jpg # Forgot to copy the wallpaper
 }
 
 shelp() {
@@ -49,12 +49,13 @@ shelp() {
 protect(){
 	echo "Phase One - Harmful group removal"
 	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(visita8Jau\|,visita8Jau\|visita8Jau,\)//g}' /etc/group /etc/gshadow
-
+	echo "Phase Two - Su blocking"
+	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' /etc/pam.d/su
 }
 
 version() {
 	echo "umfs - UNLA's Multi Function Script"
-	echo "    Version 0.3"
+	echo "    Version 0.4"
 	echo "    Brougth to you by"
 	echo "    Unpayed Undergrads at UNLA"
 	echo "    License"
