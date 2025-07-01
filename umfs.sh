@@ -48,14 +48,15 @@ shelp() {
 
 protect(){
 	echo "Phase One - Harmful group removal"
-	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(visita8Jau\|,visita8Jau\|visita8Jau,\)//g}' /etc/group /etc/gshadow
+	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(estudiante\|,estudiante\|estudiante,\)//g}' /etc/group /etc/gshadow
 	echo "Phase Two - Su blocking"
 	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' /etc/pam.d/su
+	# User can still use the sudo account
 }
 
 version() {
 	echo "umfs - UNLA's Multi Function Script"
-	echo "    Version 0.4"
+	echo "    Version 0.5"
 	echo "    Brougth to you by"
 	echo "    Unpayed Undergrads at UNLA"
 	echo "    License"
