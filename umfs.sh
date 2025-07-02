@@ -43,7 +43,7 @@ install-prerequisites(){
 	# Se instalan los programas (incompleto por ahora).
 	sudo apt install -y bleachbit xdg-user-dirs \
 		cron libreoffice build-essential jq neovim \
-		vim xterm uxterm git nodejs npm swi-prolog \
+		vim xterm git nodejs npm swi-prolog \
 		mysql-server dia mongodb
 	echo -e "\033[0;32mDone\033[0m"
 }
