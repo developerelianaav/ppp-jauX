@@ -40,14 +40,28 @@ install-prerequisites(){
 	[ -d ${house}/Clases ] || mkdir -p ${house}/Clases ; sudo chown -R estudiante ${house}/Clases
 	# Se descarga el fondo de pantalla.
 	[ -d ${house}/Clases ] || wget -O ${house}/Clases/.wall.png "https://github.com/developerelianaav/scripts/blob/main/wall.png?raw=true"
+	# Se actualizan los programas
+	sudo apt update && sudo apt upgrade -y
 	# Se instalan los programas (incompleto por ahora).
 	sudo apt install -y bleachbit xdg-user-dirs \
 		cron libreoffice build-essential jq neovim \
 		vim xterm git nodejs npm swi-prolog \
-		mysql-server dia mongodb
+		mysql-server dia mongodb curl
 	echo -e "\033[0;32mDone\033[0m"
 }
 
+update(){
+	# Vuelve ejecutable este script
+	sudo chmod +x "${0}"
+	# Elimina la versión anterior
+	sudo rm -rf /usr/local/bin/umfs.sh
+	# Vuelve estos archivos mutables
+	sudo chattr -i $house/.profile $house/.bashrc
+	# Elimina esta línea para evitar que se repita.
+	sudo sed -i -e 's/\/usr\/local\/bin\/umfs.sh -c//g' $house/.profile
+	# Vuelve a instalar
+	install-prerequisites
+}
 
 protect(){
 	# Se elimina al estudiante de los grupos peligrosos.
@@ -73,20 +87,21 @@ shelp() {
 
 version() {
 	echo "umfs - UNLA's Multi Function Script"
-	echo "    Version 0.7"
+	echo "    Version 0.8"
 	echo "    Brougth to you by"
-	echo "    Unpayed Undergrads at UNLA"
-	echo "    License"
-	echo "    GPL-3.0-only or GPL-3.0-or-later"
+	echo "    Undergrads at UNLA"
 }
 
-while getopts "cihpv" option; do
+while getopts "ciuhpv" option; do
 	case $option in
 		c)
 			clean # Grupo 2
 			;;
 		i)
 			install-prerequisites # Grupo 1
+			;;
+		u)
+			update
 			;;
 		h)
 			shelp
