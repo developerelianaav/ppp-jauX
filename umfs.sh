@@ -68,6 +68,9 @@ protect(){
 	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(estudiante\|,estudiante\|estudiante,\)//g}' /etc/group /etc/gshadow
 	# Se le prohibe al usuario utilizar su.
 	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' /etc/pam.d/su
+	# Se le prohibe al usuario utilizar polkit, excepto para usb.
+	sudo echo 'polkit.addRule(function(action, subject) { if (subject.user("estudiante")) { if (action.id == "org.freedesktop.udisks2.filesystem-mount" || action.id == "org.freedesktop.udisks.filesystem-mount" || action.id == "org.gnome.settings-daemon.plugins.power.mount-removable-media") { return polkit.Result.YES; } return polkit.Result.NO; } });' | sudo tee /etc/polkit-1/rules.d/90-strict-estudiante-rules.rules &> /dev/null
+	sudo systemctl restart polkit.service
 	echo -e "\033[0;32mDone\033[0m"	
 }
 
@@ -87,7 +90,7 @@ shelp() {
 
 version() {
 	echo "umfs - UNLA's Multi Function Script"
-	echo "    Version 0.8"
+	echo "    Version 0.9"
 	echo "    Brougth to you by"
 	echo "    Undergrads at UNLA"
 }
