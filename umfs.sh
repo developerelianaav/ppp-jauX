@@ -57,6 +57,8 @@ update(){
 	sudo rm -rf /usr/local/bin/umfs.sh
 	# Vuelve estos archivos mutables
 	sudo chattr -i $house/.profile $house/.bashrc
+	# Elimina archivos creados
+	sudo rm /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules
 	# Elimina esta línea para evitar que se repita.
 	sudo sed -i -e 's/\/usr\/local\/bin\/umfs.sh -c//g' $house/.profile
 	# Vuelve a instalar
@@ -69,8 +71,10 @@ protect(){
 	# Se le prohibe al usuario utilizar su.
 	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' /etc/pam.d/su
 	# Se le prohibe al usuario utilizar polkit, excepto para usb.
-	sudo echo 'polkit.addRule(function(action, subject) { if (subject.user("estudiante")) { if (action.id == "org.freedesktop.udisks2.filesystem-mount" || action.id == "org.freedesktop.udisks.filesystem-mount" || action.id == "org.gnome.settings-daemon.plugins.power.mount-removable-media") { return polkit.Result.YES; } return polkit.Result.NO; } });' | sudo tee /etc/polkit-1/rules.d/90-strict-estudiante-rules.rules &> /dev/null
+	sudo printf 'polkit.addRule(function(action, subject) {\n    if (subject.user == \"estudiante\") {\n        if (action.id == \"org.freedesktop.login1.reboot\") {\n            return polkit.Result.YES;\n        }\n\n        if (action.id == \"org.freedesktop.login1.power-off\") {\n            return polkit.Result.YES;\n        }\n\n        if (action.id == \"org.freedesktop.login1.terminate-session\") {\n            return polkit.Result.YES;\n        }\n\n        if (action.id == \"org.freedesktop.udisks2.filesystem-mount\") {\n            if (!action.lookup(\"device.is_system\")) {\n                return polkit.Result.YES;\n            }\n        }\n\n        return polkit.Result.NO;\n    }\n});' >> /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules &> /dev/null
+	# Reinicia polkit
 	sudo systemctl restart polkit.service
+	# Fin
 	echo -e "\033[0;32mDone\033[0m"	
 }
 
@@ -90,7 +94,7 @@ shelp() {
 
 version() {
 	echo "umfs - UNLA's Multi Function Script"
-	echo "    Version 0.9"
+	echo "    Version 1.0"
 	echo "    Brougth to you by"
 	echo "    Undergrads at UNLA"
 }
