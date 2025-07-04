@@ -46,7 +46,7 @@ protect(){
 }
 
 shelp() {
-	echo "umfs - UNLA's Multi Function Script"
+	echo "umfs - UNLa's Multi Function Script"
 	echo "-c"
 	echo "    Reinicia el directorio del usuario"
 	echo "-i"
@@ -61,8 +61,8 @@ shelp() {
 }
 
 version() {
-	echo "umfs - UNLA's multi function script"
-	echo "    Versión 1.1.3.3"
+	echo "umfs - UNLa's multi function script"
+	echo "    Versión 1.1.3.4"
 	echo "    Creado por"
 	echo "    Estudiantes de la UNLA" 
 }
