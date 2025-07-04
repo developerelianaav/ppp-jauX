@@ -19,6 +19,13 @@ en una PPP de la UNLa, que transcurrió entre Junio y Agosto del 2025.
 * P: ¿Cómo puedo entender que hace el script?
 * R: Leyendolo y viendo que hace cada programa llamado, recomendaría usar las guías
   de Red Hat y las páginas man.
+## Uso de umfs.sh
+
+```
+wget "https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/umfs.sh"
+sudo bash umfs.sh -i
+sudo umfs.sh -p
+```
 
 ## Recursos útiles
 * [man bash](https://www.man7.org/linux/man-pages/man1/bash.1.html)
