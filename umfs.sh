@@ -21,10 +21,9 @@ clean(){
 }
 
 installp(){
-	rm -rf /usr/local/bin/umfs.sh
+	[ -f /usr/local/bin/umfs.sh ] && rm -rf /usr/local/bin/umfs.sh
 	chmod 755 "${0}" ; cp "${0}" /usr/local/bin/umfs.sh
 	chattr -i $est/.profile $est/.bashrc
-	#rm /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules
 	sed -i -e 's/\/usr\/local\/bin\/umfs.sh -c//g' $est/.profile
 	echo "/usr/local/bin/umfs.sh -c" >> ${est}/.profile
 	chown -R estudiante ${est}/.profile ${est}/.bashrc
@@ -64,7 +63,7 @@ shelp() {
 
 version() {
 	echo "umfs - UNLA's multi function script"
-	echo "    Versión 1.1"
+	echo "    Versión 1.1.1"
 	echo "    Creado por"
 	echo "    Estudiantes de la UNLA" 
 }
