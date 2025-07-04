@@ -5,8 +5,8 @@ shopt -s extglob
 
 nout='&>/dev/null'
 est='/home/estudiante'
-wall='"https://github.com/developerelianaav/ppp-jauX/blob/main/wall.png?raw=true"'
-pol='"https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/10-estudiante-policy.pkla"'
+wall='"https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/wall.png?raw=true"'
+pol='"https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/10-estudiante-policy.pkla"'
 
 clean(){
 	bleachbit --clean firefox.* google_chrome.* \
@@ -63,7 +63,7 @@ shelp() {
 
 version() {
 	echo "umfs - UNLA's multi function script"
-	echo "    Versión 1.1.2"
+	echo "    Versión 1.1.3"
 	echo "    Creado por"
 	echo "    Estudiantes de la UNLA" 
 }
