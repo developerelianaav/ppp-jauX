@@ -1,7 +1,6 @@
 [Permisos]
 Identity=unix-user:estudiante
-Action=org.freedesktop.udisks2.filesystem-mount;\
-       org.freedesktop.login1.power-off;org.freedesktop.login1.power-off-multiple-sessions;\
+Action=org.freedesktop.login1.power-off;org.freedesktop.login1.power-off-multiple-sessions;\
        org.freedesktop.login1.reboot;org.freedesktop.login1.reboot-multiple-sessions;\
        org.freedesktop.login1.terminate-session
 ResultAny=no
@@ -10,7 +9,9 @@ ResultActive=yes
 
 [Bloqueos]
 Identity=unix-user:estudiante
-Action=org.freedesktop.udisks2.filesystem-mount-system;org.freedesktop.udisks2.filesystem-mount-system-internal
+Action=org.freedesktop.udisks2.filesystem-mount-system;\
+       org.freedesktop.udisks2.filesystem-mount-system-internal;\
+       org.freedesktop.udisks2.filesystem-mount
 ResultAny=no
 ResultInactive=no
 ResultActive=no
