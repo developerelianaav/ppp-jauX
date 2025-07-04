@@ -1,6 +1,6 @@
 [Bloqueos]
 Identity=unix-user:estudiante
-Action=org.gtk.vfs.file.operations-helper;org.freedesktop.udisks2.filesystem-mount-system;org.freedesktop.udisks2.filesystem-mount-system-internal;
+Action=org.gtk.vfs.file-operations;org.gtk.vfs.file-operations-helper;org.freedesktop.udisks2.filesystem-mount-system;org.freedesktop.udisks2.filesystem-mount-system-internal;
 ResultInactive=no
 ResultActive=no
 
