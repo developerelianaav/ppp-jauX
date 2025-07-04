@@ -5,8 +5,8 @@ shopt -s extglob
 
 nout='&>/dev/null'
 est='/home/estudiante'
-wall='"https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/wall.png?raw=true"'
-pol='"https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/10-estudiante-policy.pkla"'
+wall="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/wall.png?raw=true"
+pol="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/10-estudiante-policy.pkla"
 
 clean(){
 	bleachbit --clean firefox.* google_chrome.* \
@@ -16,7 +16,7 @@ clean(){
 	cd ${est} && rm -rf !(Clases|.config|.local) ${nout}
 	xdg-user-dirs-update ${nout} ; xdg-user-dirs-update --force  ${nout}
 	[ -d ${est}/Clases ] || mkdir -p ${est}/Clases ${nout}
-	[ -f ${est}/Clases/.wall.png ] || wget -O ${est}/Clases/.wall.png ${wall} ${nout}
+	[ -f ${est}/Clases/.wall.png ] || wget -O ${est}/Clases/.wall.png "${wall}" ${nout}
 	gsettings set org.gnome.desktop.background picture-uri file:///${est}/Clases/.wall.png
 }
 
@@ -29,7 +29,7 @@ installp(){
 	chown -R estudiante ${est}/.profile ${est}/.bashrc
 	chattr +i ${est}/.profile ${est}/.bashrc
 	[ -d ${est}/Clases ] || mkdir -p ${est}/Clases ; chown -R estudiante ${est}/Clases
-	[ -f ${est}/Clases/.wall.png ] || wget -O ${est}/Clases/.wall.png ${wall} 
+	[ -f ${est}/Clases/.wall.png ] || wget -O ${est}/Clases/.wall.png "${wall}" ${nout} 
 	apt update && apt upgrade -y
 	apt install -y bleachbit xdg-user-dirs \
 		cron libreoffice build-essential jq neovim-qt \
@@ -41,7 +41,7 @@ installp(){
 protect(){
 	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(estudiante\|,estudiante\|estudiante,\)//g}' /etc/group /etc/gshadow
 	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' /etc/pam.d/su
-	wget -O /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla ${pol}
+	wget -O /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla "${pol}" ${nout}
 	sudo systemctl restart polkit.service
 	echo -e "\033[0;32mDone\033[0m"	
 }
@@ -63,7 +63,7 @@ shelp() {
 
 version() {
 	echo "umfs - UNLA's multi function script"
-	echo "    Versión 1.1.3"
+	echo "    Versión 1.1.3.1"
 	echo "    Creado por"
 	echo "    Estudiantes de la UNLA" 
 }
