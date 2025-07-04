@@ -41,6 +41,7 @@ installp(){
 protect(){
 	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(estudiante\|,estudiante\|estudiante,\)//g}' /etc/group /etc/gshadow
 	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' /etc/pam.d/su
+  	[ -f /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla ] && rm /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla
 	wget -O /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla "${pol}" &>/dev/null
 	sudo systemctl restart polkit.service
 	echo -e "\033[0;32mDone\033[0m"	
@@ -63,7 +64,7 @@ shelp() {
 
 version() {
 	echo "umfs - UNLa's multi function script"
-	echo "    Versión 1.1.3.5"
+	echo "    Versión 1.1.3.6"
 	echo "    Creado por"
 	echo "    Estudiantes de la UNLA" 
 }
