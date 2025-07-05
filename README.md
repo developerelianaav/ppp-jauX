@@ -24,7 +24,7 @@ en una PPP de la UNLa, que transcurrió entre Junio y Agosto del 2025.
 ```
 wget "https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/umfs.sh"
 sudo bash umfs.sh -i
-sudo umfs.sh -p
+umfs.sh -v
 ```
 
 ## Recursos útiles
