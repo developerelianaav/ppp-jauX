@@ -5,7 +5,7 @@ shopt -s extglob
 
 est='/home/estudiante'
 wall="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/wall.png?raw=true"
-pol="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/10-estudiante-policy.pkla"
+pol="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/60-estudiante.conf"
 
 clean(){
 	bleachbit --clean firefox.* google_chrome.* \
@@ -23,8 +23,8 @@ installp(){
 	[ -f /usr/local/bin/umfs.sh ] && rm -rf /usr/local/bin/umfs.sh
  	[ -f /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla ] && rm /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla
 	chmod 755 "${0}" ; cp "${0}" /usr/local/bin/umfs.sh
-	chattr -i $est/.profile $est/.bashrc
-	sed -i -e 's/\/usr\/local\/bin\/umfs.sh -c//g' $est/.profile
+	chattr -i ${est}/.profile ${est}/.bashrc
+	sed -i -e 's/\/usr\/local\/bin\/umfs.sh -c//g' ${est}/.profile
 	echo "/usr/local/bin/umfs.sh -c" >> ${est}/.profile
 	chown -R estudiante ${est}/.profile ${est}/.bashrc
 	chattr +i ${est}/.profile ${est}/.bashrc
@@ -34,18 +34,16 @@ installp(){
 	apt install -y bleachbit xdg-user-dirs \
 		cron libreoffice build-essential jq neovim-qt \
 		vim-gtk3 xterm git nodejs npm swi-prolog \
-		mysql-server dia mongodb curl emacs
-	echo -e "\033[0;32mDone\033[0m"
-}
-
-protect(){
+		mysql-server dia mongodb curl emacs unrar
 	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(estudiante\|,estudiante\|estudiante,\)//g}' /etc/group /etc/gshadow
 	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' /etc/pam.d/su
   	[ -f /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla ] && rm /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla
-	wget -O /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla "${pol}" &>/dev/null
- 	chmod +rwx /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla
-	sudo systemctl restart polkit.service
-	echo -e "\033[0;32mDone\033[0m"	
+  	[ -f /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules ] && rm /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules
+	wget -O /etc/polkit-1/localauthority.conf.d/60-estudiante.conf "${pol}" &>/dev/null
+ 	chmod 755 /etc/polkit-1/localauthority.conf.d/60-estudiante.conf
+	systemctl restart polkit.service
+	find /home/"${SUDO_USER}"/ -name "umfs.sh" -type f -delete
+	echo -e "\033[0;32mDone\033[0m"
 }
 
 shelp() {
@@ -54,9 +52,8 @@ shelp() {
 	echo "    Reinicia el directorio del usuario"
 	echo "-i"
 	echo "    Instala/Actualiza el programa y"
-	echo "    sus requerimientos"
-	echo "-p"
-	echo "    Restringe al usuario común"
+	echo "    sus requerimientos y restringe al"
+	echo "    usuario común"
 	echo "-h"
 	echo "    Muestra este mensaje"
 	echo "-v"
@@ -65,21 +62,18 @@ shelp() {
 
 version() {
 	echo "umfs - UNLa's multi function script"
-	echo "    Versión 1.1.3.7"
+	echo "    Versión 2.0.0.0"
 	echo "    Creado por"
 	echo "    Estudiantes de la UNLA" 
 }
 
-while getopts "ciphv" option; do
+while getopts "cihv" option; do
 	case $option in
 		c)
 			clean
 			;;
 		i)
 			installp
-			;;
-		p)
-			protect
 			;;
 		h)
 			shelp
