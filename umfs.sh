@@ -7,7 +7,6 @@ est='/home/estudiante'
 wall="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/wall.png?raw=true"
 pol="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/60-estudiante.conf"
 pkg="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/pkg.list"
-pse="http://prdownloads.sourceforge.net/pseint/pseint-l64-20250314.tgz?download"
 
 basic-install(){
 	printf -- "\033[0;33m ¡Comenzando instalación! \033[0m\n"
@@ -19,17 +18,9 @@ basic-install(){
        	chown -R estudiante ${est}/Clases
 	[ -f ${est}/Clases/.wall.png ] || \
 		wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
-	printf -- "code code/add-microsoft-repo boolean true\n" | \
-		sudo debconf-set-selections
-	add-apt-repository ppa:maarten-fonville/android-studio
-	add-apt-repository ppa:x-psoud/cbreleases
-	apt-add-repository ppa:swi-prolog/stable
 	apt update -q && apt upgrade -qy
 	wget -O /tmp/pkg.list "${pkg}" &>/dev/null
 	apt install -mqy $(awk '{print $1}' /tmp/pkg.list)
-	wget -O /tmp/pseint.tgz "${pse}" ; tar -xvf /tmp/pseint.tgz
-	mv /tmp/pseint /opt/ ; chmod +x /opt/pseint/pseint
-	ln -s /opt/pseint/pseint /usr/local/bin/pseint
 	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
 }
 
@@ -65,7 +56,6 @@ sweep() {
 	printf -- "\033[0;33m ¡Eliminando archivos innecesarios! \033[0m\n"
 	find /home/"${SUDO_USER}"/ -name "umfs.sh" -type f -delete
 	find /tmp/ -name "pkg.list" -type f -delete
-	find /tmp/ -name "pseint.tgz" -type f -delete
 	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
 }
 
@@ -101,7 +91,7 @@ show-help() {
 
 version() {
 	printf -- "umfs - UNLa's multi function script\n"
-	printf -- "\tVersión 2.2.1.1\n"
+	printf -- "\tVersión 2.2.2.0\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
