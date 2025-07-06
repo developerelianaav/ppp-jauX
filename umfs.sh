@@ -86,7 +86,11 @@ show-help() {
 	printf -- "-c\n"
 	printf -- "\tReinicia el directorio del usuario\n"
 	printf -- "-i\n"
-	printf -- "\tInstala/Actualiza el programa y\n"
+	printf -- "\tInstala el programa,\n"
+	printf -- "\tsus requerimientos y restringe al\n"
+	printf -- "\tusuario común\n"
+	printf -- "-u\n"
+	printf -- "\tActualiza el programa,\n"
 	printf -- "\tsus requerimientos y restringe al\n"
 	printf -- "\tusuario común\n"
 	printf -- "-h\n"
@@ -97,7 +101,7 @@ show-help() {
 
 version() {
 	printf -- "umfs - UNLa's multi function script\n"
-	printf -- "\tVersión 2.1.0.0\n"
+	printf -- "\tVersión 2.2.1.0\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
