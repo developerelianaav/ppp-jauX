@@ -42,5 +42,5 @@ sudo bash umfs.sh -u
 * [Bash best practices](https://bertvv.github.io/cheat-sheets/Bash.html)
 * [Using Case](https://www.redhat.com/en/blog/arguments-options-bash-scripts)
 * [Do not use If](https://www.youtube.com/watch?v=p0KKBmfiVl0)
-* Lectura de un varias publicaciones en [Unix](https://unix.stackexchange.com), [StackOverFlow](https://stackoverflow.com)
+* Lectura de varias publicaciones en [Unix](https://unix.stackexchange.com), [StackOverFlow](https://stackoverflow.com)
   y [Serverfault](https://serverfault.com).
