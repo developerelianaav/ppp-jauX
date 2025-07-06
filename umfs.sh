@@ -6,6 +6,58 @@ shopt -s extglob
 est='/home/estudiante'
 wall="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/wall.png?raw=true"
 pol="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/60-estudiante.conf"
+pkg="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/pkg.list"
+
+basic-install(){
+	printf -- "\033[0;33m ¡Comenzando instalación! \033[0m\n"
+	chmod 755 "${0}" ; cp "${0}" /usr/local/bin/umfs.sh
+	printf -- "/usr/local/bin/umfs.sh -c\n" >> ${est}/.profile
+	chown -R estudiante ${est}/.profile ${est}/.bashrc
+	chattr +i ${est}/.profile ${est}/.bashrc
+	[ -d ${est}/Clases ] || mkdir -p ${est}/Clases
+       	chown -R estudiante ${est}/Clases
+	[ -f ${est}/Clases/.wall.png ] || \
+		wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
+	apt update -q && apt upgrade -qy
+	wget -O /tmp/pkg.list "${pkg}" &>/dev/null
+	apt install -mqy $(awk '{print $1}' /tmp/pkg.list)
+	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
+}
+
+protect() {
+	printf -- "\033[0;33m ¡Restringiendo al Estudiante! \033[0m\n"
+	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(estudiante\|,estudiante\|estudiante,\)//g}' \
+	       	/etc/group /etc/gshadow
+	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' \
+		/etc/pam.d/su
+	wget -O /etc/polkit-1/localauthority.conf.d/60-estudiante.conf "${pol}" &>/dev/null
+ 	chmod 755 /etc/polkit-1/localauthority.conf.d/60-estudiante.conf
+	systemctl restart polkit.service
+	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
+}
+
+remove(){
+	printf -- "\033[0;33m ¡Limpiando para actualizar! \033[0m\n"
+	[ -f /usr/local/bin/umfs.sh ] && rm -rf /usr/local/bin/umfs.sh
+	[ -f /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla ] && \
+		rm /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla
+  	[ -f /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules ] && \
+		rm /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules
+	[ -f /etc/polkit-1/localauthority.conf.d/60-estudiante-conf ] && \
+		rm /etc/polkit-1/localauthority.conf.d/60-estudiante-conf
+	sed -i -e 's/auth       required   pam_wheel.so/# auth       required   pam_wheel.so/g' \
+		/etc/pam.d/su
+	chattr -i ${est}/.profile ${est}/.bashrc
+	sed -i -e 's/\/usr\/local\/bin\/umfs.sh -c//g' ${est}/.profile
+	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
+}
+
+sweep() {
+	printf -- "\033[0;33m ¡Eliminando archivos innecesarios! \033[0m\n"
+	find /home/"${SUDO_USER}"/ -name "umfs.sh" -type f -delete
+	find /tmp/ -name "pkg.list" -type f -delete
+	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
+}
 
 clean(){
 	bleachbit --clean firefox.* google_chrome.* \
@@ -19,70 +71,67 @@ clean(){
 	gsettings set org.gnome.desktop.background picture-uri file:///${est}/Clases/.wall.png
 }
 
-installp(){
-	[ -f /usr/local/bin/umfs.sh ] && rm -rf /usr/local/bin/umfs.sh
- 	[ -f /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla ] && rm /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla
-	chmod 755 "${0}" ; cp "${0}" /usr/local/bin/umfs.sh
-	chattr -i ${est}/.profile ${est}/.bashrc
-	sed -i -e 's/\/usr\/local\/bin\/umfs.sh -c//g' ${est}/.profile
-	echo "/usr/local/bin/umfs.sh -c" >> ${est}/.profile
-	chown -R estudiante ${est}/.profile ${est}/.bashrc
-	chattr +i ${est}/.profile ${est}/.bashrc
-	[ -d ${est}/Clases ] || mkdir -p ${est}/Clases ; chown -R estudiante ${est}/Clases
-	[ -f ${est}/Clases/.wall.png ] || wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null 
-	apt update && apt upgrade -y
-	apt install -y bleachbit xdg-user-dirs \
-		cron libreoffice build-essential jq neovim-qt \
-		vim-gtk3 xterm git nodejs npm swi-prolog \
-		mysql-server dia mongodb curl emacs unrar
-	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(estudiante\|,estudiante\|estudiante,\)//g}' /etc/group /etc/gshadow
-	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' /etc/pam.d/su
-  	[ -f /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla ] && rm /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla
-  	[ -f /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules ] && rm /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules
-	wget -O /etc/polkit-1/localauthority.conf.d/60-estudiante.conf "${pol}" &>/dev/null
- 	chmod 755 /etc/polkit-1/localauthority.conf.d/60-estudiante.conf
-	systemctl restart polkit.service
-	find /home/"${SUDO_USER}"/ -name "umfs.sh" -type f -delete
-	echo -e "\033[0;32mDone\033[0m"
-}
-
-shelp() {
-	echo "umfs - UNLa's Multi Function Script"
-	echo "-c"
-	echo "    Reinicia el directorio del usuario"
-	echo "-i"
-	echo "    Instala/Actualiza el programa y"
-	echo "    sus requerimientos y restringe al"
-	echo "    usuario común"
-	echo "-h"
-	echo "    Muestra este mensaje"
-	echo "-v"
-	echo "    Muestra la versión de este script"
+show-help() {
+	printf -- "umfs - UNLa's Multi Function Script\n"
+	printf -- "-c\n"
+	printf -- "\tReinicia el directorio del usuario\n"
+	printf -- "-i\n"
+	printf -- "\tInstala/Actualiza el programa y\n"
+	printf -- "\tsus requerimientos y restringe al\n"
+	printf -- "\tusuario común\n"
+	printf -- "-h\n"
+	printf -- "\tMuestra este mensaje\n"
+	printf -- "-v\n"
+	printf -- "\tMuestra la versión de este script\n"
 }
 
 version() {
-	echo "umfs - UNLa's multi function script"
-	echo "    Versión 2.0.0.0"
-	echo "    Creado por"
-	echo "    Estudiantes de la UNLA" 
+	printf -- "umfs - UNLa's multi function script\n"
+	printf -- "\tVersión 2.1.0.0\n"
+	printf -- "Creado por\n"
+	printf -- "\tEstudiantes de la UNLA\n" 
+	printf -- "Licencia\n"
+	printf -- "\tThe Unlicense - https://unlicense.org \n" 
 }
 
-while getopts "cihv" option; do
+fresh-install(){
+	printf -- "\033[0;33m ¡Comenzando una instalación nueva! \033[0m\n"
+	install
+	protect
+	version
+	sweep
+	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
+}
+
+update(){
+	printf -- "\033[0;33m ¡Actualizando a una nueva versión de umfs.sh! \033[0m\n"
+	remove
+	install
+	protect
+	version
+	sweep	
+	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
+}
+
+while getopts "ciuhv" option; do
 	case $option in
 		c)
 			clean
 			;;
 		i)
-			installp
+			fresh-install
+			;;
+		u)
+			update
 			;;
 		h)
-			shelp
+			show-help 
 			;;
 		v)
 			version
 			;;
 		*)
-			echo "Opción errónea"
-			shelp	
+			printf -- "\033[0;31m ¡Opción errónea! \033[0m\n"
+			show-help	
 	esac
 done
