@@ -101,7 +101,7 @@ show-help() {
 
 version() {
 	printf -- "umfs - UNLa's multi function script\n"
-	printf -- "\tVersión 2.2.1.0\n"
+	printf -- "\tVersión 2.2.1.1\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
