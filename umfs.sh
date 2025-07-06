@@ -20,7 +20,7 @@ basic-install(){
 	[ -f ${est}/Clases/.wall.png ] || \
 		wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
 	apt update && apt upgrade -y
-	[ -f /tmp/pkg.list ] || wget -O /tmp/pkg.list "${pkg}" &>/dev/null
+	wget -O /tmp/pkg.list "${pkg}" &>/dev/null
 	[ -f ${est}/Clases/.unla.jpg ] || \
 		wget -O ${est}/Clases/.unla.png "${uni}" &>/dev/null
 	apt install -mqy $(awk '{print $1}' /tmp/pkg.list)
@@ -98,7 +98,7 @@ version() {
 	jp2a --colors --size=40x20 ${est}/Clases/.unla.png
 	printf -- "umfs - UNLa's multi function script\n"
 	[[ "$(date +%d)" == 07 && "$(date +%m)" == 06 ]] && printf -- "\tVersión 1.9.9.5\n" || \
-		printf -- "\tVersión 2.2.2.6\n"
+		printf -- "\tVersión 2.2.2.7\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
