@@ -7,7 +7,7 @@ est='/home/estudiante'
 wall="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/wall.png?raw=true"
 pol="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/60-estudiante.conf"
 pkg="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/pkg.list"
-uni="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/unla.png?raw=true"
+uni="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/unla.jpg?raw=true"
 
 basic-install(){
 	printf -- "\033[0;33m ¡Comenzando instalación! \033[0m\n"
@@ -19,10 +19,11 @@ basic-install(){
        	chown -R estudiante ${est}/Clases
 	[ -f ${est}/Clases/.wall.png ] || \
 		wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
-	apt update && apt upgrade -y
+	apt update
+ 	apt upgrade -y
 	wget -O /tmp/pkg.list "${pkg}" &>/dev/null
 	[ -f ${est}/Clases/.unla.jpg ] || \
-		wget -O ${est}/Clases/.unla.png "${uni}" &>/dev/null
+		wget -O ${est}/Clases/.unla.jpg "${uni}" &>/dev/null
 	apt install -mqy $(awk '{print $1}' /tmp/pkg.list)
 	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
 }
@@ -71,7 +72,7 @@ clean(){
 	xdg-user-dirs-update &>/dev/null ; xdg-user-dirs-update --force  &>/dev/null
 	[ -d ${est}/Clases ] || mkdir -p ${est}/Clases &>/dev/null
 	[ -f ${est}/Clases/.wall.png ] || wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
-	[ -f ${est}/Clases/.unla.png ] || wget -O ${est}/Clases/.unla.png "${uni}" &>/dev/null
+	[ -f ${est}/Clases/.unla.jpg ] || wget -O ${est}/Clases/.unla.jpg "${uni}" &>/dev/null
 	gsettings set org.gnome.desktop.background picture-uri file:///${est}/Clases/.wall.png
 }
 
@@ -95,10 +96,10 @@ show-help() {
 
 version() {
 	clear
-	jp2a --colors --size=40x20 ${est}/Clases/.unla.png
+	jp2a --colors --size=40x20 ${est}/Clases/.unla.jpg
 	printf -- "umfs - UNLa's multi function script\n"
 	[[ "$(date +%d)" == 07 && "$(date +%m)" == 06 ]] && printf -- "\tVersión 1.9.9.5\n" || \
-		printf -- "\tVersión 2.2.2.7\n"
+		printf -- "\tVersión 2.2.2.8\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
