@@ -20,8 +20,9 @@ basic-install(){
 	[ -f ${est}/Clases/.wall.png ] || \
 		wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
 	apt update -q && apt upgrade -qy
-	wget -O /tmp/pkg.list "${pkg}" &>/dev/null
-	wget -O ${est}/Clases/.unla.png "${uni}" &>/dev/null
+	[ -f /tmp/pkg.list ] || wget -O /tmp/pkg.list "${pkg}" &>/dev/null
+	[ -f ${est}/Clases/.unla.jpg ] || \
+		wget -O ${est}/Clases/.unla.png "${uni}" &>/dev/null
 	apt install -mqy "$(awk '{print $1}' /tmp/pkg.list)"
 	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
 }
@@ -70,6 +71,7 @@ clean(){
 	xdg-user-dirs-update &>/dev/null ; xdg-user-dirs-update --force  &>/dev/null
 	[ -d ${est}/Clases ] || mkdir -p ${est}/Clases &>/dev/null
 	[ -f ${est}/Clases/.wall.png ] || wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
+	[ -f ${est}/Clases/.unla.png ] || wget -O ${est}/Clases/.unla.png "${uni}" &>/dev/null
 	gsettings set org.gnome.desktop.background picture-uri file:///${est}/Clases/.wall.png
 }
 
@@ -95,7 +97,8 @@ version() {
 	clear
 	jp2a --colors --size=40x20 ${est}/Clases/.unla.png
 	printf -- "umfs - UNLa's multi function script\n"
-	printf -- "\tVersión 2.2.2.4\n"
+	[[ "$(date +%d)" == 07 && "$(date +%m)" == 06 ]] && printf -- "\tVersión 1.9.9.5\n" || \
+		printf -- "\tVersión 2.2.2.5\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
