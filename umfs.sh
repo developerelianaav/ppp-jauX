@@ -21,7 +21,7 @@ basic-install(){
 		wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
 	apt update -q && apt upgrade -qy
 	wget -O /tmp/pkg.list "${pkg}" &>/dev/null
-	wget -O ${est]/Clases/.unla.png "${uni}" &>/dev/null
+	wget -O ${est}/Clases/.unla.png "${uni}" &>/dev/null
 	apt install -mqy "$(awk '{print $1}' /tmp/pkg.list)"
 	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
 }
@@ -95,7 +95,7 @@ version() {
 	clear
 	jp2a --colors --size=40x20 ${est}/Clases/.unla.png
 	printf -- "umfs - UNLa's multi function script\n"
-	printf -- "\tVersión 2.2.2.3\n"
+	printf -- "\tVersión 2.2.2.4\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
