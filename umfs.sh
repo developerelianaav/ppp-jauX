@@ -110,7 +110,7 @@ version() {
 
 fresh-install(){
 	printf -- "\033[0;33m ¡Comenzando una instalación nueva! \033[0m\n"
-	install
+	basic-install
 	protect
 	version
 	sweep
@@ -120,7 +120,7 @@ fresh-install(){
 update(){
 	printf -- "\033[0;33m ¡Actualizando a una nueva versión de umfs.sh! \033[0m\n"
 	remove
-	install
+	basic-install
 	protect
 	version
 	sweep	
