@@ -21,7 +21,7 @@ basic-install(){
 		wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
 	apt update -q && apt upgrade -qy
 	wget -O /tmp/pkg.list "${pkg}" &>/dev/null
-	wget -O /tmp/pkg.list "${uni}" &>/dev/null
+	wget -O ${est]/Clases/.unla.png "${uni}" &>/dev/null
 	apt install -mqy "$(awk '{print $1}' /tmp/pkg.list)"
 	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
 }
@@ -58,7 +58,6 @@ sweep() {
 	printf -- "\033[0;33m ¡Eliminando archivos innecesarios! \033[0m\n"
 	find /home/"${SUDO_USER}"/ -name "umfs.sh" -type f -delete
 	find /tmp/ -name "pkg.list" -type f -delete
-	find /tmp/ -name "unla.png" -type f -delete
 	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
 }
 
@@ -94,9 +93,9 @@ show-help() {
 
 version() {
 	clear
-	jp2a --colors --size=40x20 /tmp/unla.png
+	jp2a --colors --size=40x20 ${est}/Clases/.unla.png
 	printf -- "umfs - UNLa's multi function script\n"
-	printf -- "\tVersión 2.2.2.2\n"
+	printf -- "\tVersión 2.2.2.3\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
