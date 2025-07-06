@@ -35,7 +35,7 @@ wget "https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/ma
 sudo bash umfs.sh -u
 ```
 
-## Lista de Aplicaciones que instala umfs.sh
+## Lista de Aplicaciones que no instala umfs.sh
 
 En la siguiente lista se muestran las aplicaciones que ```umfs.sh```
 todavía no instala:
