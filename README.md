@@ -35,6 +35,15 @@ wget "https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/ma
 sudo bash umfs.sh -u
 ```
 
+## Lista de Aplicaciones que instala umfs.sh
+
+En la siguiente lista se muestran las aplicaciones que ```umfs.sh```
+todavía no instala:
+
+* Eclipse.
+* MPLAB.
+* SpringTool.
+
 ## Recursos útiles
 * [man bash](https://www.man7.org/linux/man-pages/man1/bash.1.html)
 * [man test](https://www.man7.org/linux/man-pages/man1/test.1.html)

@@ -19,6 +19,11 @@ basic-install(){
        	chown -R estudiante ${est}/Clases
 	[ -f ${est}/Clases/.wall.png ] || \
 		wget -O ${est}/Clases/.wall.png "${wall}" &>/dev/null
+	printf -- "code code/add-microsoft-repo boolean true\n" | \
+		sudo debconf-set-selections
+	add-apt-repository ppa:maarten-fonville/android-studio
+	add-apt-repository ppa:x-psoud/cbreleases
+	apt-add-repository ppa:swi-prolog/stable
 	apt update -q && apt upgrade -qy
 	wget -O /tmp/pkg.list "${pkg}" &>/dev/null
 	apt install -mqy $(awk '{print $1}' /tmp/pkg.list)
