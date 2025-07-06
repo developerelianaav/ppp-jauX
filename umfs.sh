@@ -23,7 +23,7 @@ basic-install(){
 	[ -f /tmp/pkg.list ] || wget -O /tmp/pkg.list "${pkg}" &>/dev/null
 	[ -f ${est}/Clases/.unla.jpg ] || \
 		wget -O ${est}/Clases/.unla.png "${uni}" &>/dev/null
-	apt install -mqy "$(awk '{print $1}' /tmp/pkg.list)"
+	apt install -mqy $(awk '{print $1}' /tmp/pkg.list)
 	printf -- "\033[0;32m ¡Terminado! \033[0m\n"
 }
 
