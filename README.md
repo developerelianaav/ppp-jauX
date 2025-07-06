@@ -6,8 +6,7 @@ en una PPP de la UNLa, que transcurrió entre Junio y Agosto del 2025.
 
 * P: ¿Qué es ```umfs.sh```?
 * R: ```umfs.sh``` es un script escrito para [Bash](https://www.gnu.org/software/bash/), su objetivo
-  actual es automatizar las tareas del Grupo 2, el objetivo final es automatizar las tareas de los
-  Grupos 1, 2 y 3.
+  es automatizar las tareas del Grupo 1 y 2.
 * P: ¿Qué tareas automatiza ```umfs.sh```?
 * R: ```umfs.sh``` actualmente automatiza las siguientes tareas:
   1. Limpieza del ```/home/``` del estudiante.
