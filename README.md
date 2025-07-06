@@ -40,9 +40,13 @@ sudo bash umfs.sh -u
 En la siguiente lista se muestran las aplicaciones que ```umfs.sh```
 todavía no instala:
 
+* Android Studio
+* Codeblocks
 * Eclipse.
 * MPLAB.
+* Pseint.
 * SpringTool.
+* Visual Studio Code.
 
 ## Recursos útiles
 * [man bash](https://www.man7.org/linux/man-pages/man1/bash.1.html)
