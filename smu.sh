@@ -42,7 +42,7 @@ editador(){
 	       	/etc/group /etc/gshadow
 	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' \
 		/etc/pam.d/su
-	printf -- "/usr/local/bin/umfs.sh -c\n" >> "${est}"/.profile
+	printf -- "/usr/local/bin/smu.sh -c\n" >> "${est}"/.profile
 	printf -- "\033[0;32m¡Se editaron los archivos!\033[0m\n"
 }
 
@@ -57,7 +57,7 @@ modificador() {
 
 programas() {
 	printf -- "\033[0;33m¡Instalando los programas!\033[0m\n"
-	cp "${0}" /usr/local/bin/smfu.sh
+	cp "${0}" /usr/local/bin/smu.sh
 	apt update && apt upgrade --yes
 	apt install --yes $(awk '{$1=$1}1' /tmp/pkg.list)
 	printf -- "\033[0;32m¡Se instalaron los programas!\033[0m\n"
@@ -67,6 +67,7 @@ programas() {
 ceroizador() {
 	printf -- "\033[0;33m¡Limpiando para actualizar!\033[0m\n"
 	[ -f /usr/local/bin/umfs.sh ] && rm -rf /usr/local/bin/umfs.sh
+ 	[ -f /usr/local/bin/smu.sh ] && rm -rf /usr/local/bin/smu.sh
 	[ -f /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla ] && \
 		rm /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla
   	[ -f /etc/polkit-1/rules.d/90-strict-estudiante-policy.rules ] && \
@@ -77,11 +78,13 @@ ceroizador() {
 		/etc/pam.d/su
 	chattr -i ${est}/.profile ${est}/.bashrc
 	sed -i -e 's/\/usr\/local\/bin\/umfs.sh -c//g' ${est}/.profile
+ 	sed -i -e 's/\/usr\/local\/bin\/smus.sh -c//g' ${est}/.profile
 	printf -- "\033[0;32m¡Se limpió!\033[0m\n"
 }
 
 barrido() {
-	find /home/"${SUDO_USER}"/ -name "*smfu.sh*" -type f -delete
+	find /home/"${SUDO_USER}"/ -name "*smu.sh*" -type f -delete
+ 	find /home/"${SUDO_USER}"/ -name "*umfs.sh*" -type f -delete
 	find /tmp/ -name "*pkg.list*" -type f -delete
 }
 
