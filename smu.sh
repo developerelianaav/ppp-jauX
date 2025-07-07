@@ -23,7 +23,7 @@ directorios() {
 	printf -- "\033[0;33m¡Creando directorios!\033[0m\n"
 	[[ -n ${SUDO_USER} || $(whoami) == "root" ]] && mkdir --parents /tmp
 	[[ -n ${SUDO_USER} || $(whoami) == "root" ]] && mkdir --parents "${epc}"
-	[ ! -d "${est}"/Clases ] && su estudiante --command="mkdir --parents \"${est}\"/Clases"
+	[ ! -d "${est}"/Clases ] && mkdir --parents "${est}"/Clases
 	printf -- "\033[0;32m¡Se crearon los directorios!\033[0m\n"
 }
 
@@ -50,6 +50,7 @@ modificador() {
 	printf -- "\033[0;33m¡Modificando los permisos de los archivos!\033[0m\n"
 	chmod 755 "${0}"
  	chmod 755 "${epc}"/60-estudiante.conf
+  	chown --recursive estudiante "${est}"/Clases
 	chown estudiante "${est}"/.profile "${est}"/.bashrc
 	chattr +i "${est}"/.bashrc "${est}"/.profile
 	printf -- "\033[0;32m¡Se modificaron los permisos de los archivos!\033[0m\n"
@@ -94,9 +95,10 @@ limpieza() {
 		libreoffice.* system.cache system.clipboard \
 		system.recent_documents system.tmp system.trash \
 		&>/dev/null
-	cd "${est}" && rm -rf !(Clases|.config|.local) &>/dev/null
+	[ -d "${est}"/Clases ] || mkdir --parents "${est}"/Clases &>/dev/null
+ 	descargas
+	cd "${est}" && rm --recursive --force !(Clases|.config|.local) &>/dev/null
 	xdg-user-dirs-update &>/dev/null ; xdg-user-dirs-update --force  &>/dev/null
-	[ -d "${est}"/Clases ] || mkdir -p "${est}"/Clases &>/dev/null
 	gsettings set org.gnome.desktop.background picture-uri file:///"${est}"/Clases/.wall.png
 }
 
@@ -146,7 +148,7 @@ version() {
 	[[ "$(date +%d)" == 07 && "$(date +%m)" == 06 ]] && \
 		printf -- "\033[0;32m\t¡La UNLa cumple %s años!\033[0m\n" "${rio}"
 	[[ "$(date +%d)" == 07 && "$(date +%m)" == 06 ]] && printf -- "\t\033[0;32mVersión 1.9.9.5\033[0m\n" || \
-		printf -- "\tVersión 3.0.0.1\n"
+		printf -- "\tVersión 3.0.0.2\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
