@@ -66,6 +66,7 @@ programas() {
 
 ceroizador() {
 	printf -- "\033[0;33m¡Limpiando para actualizar!\033[0m\n"
+ 	[ -d "${est}"/Clases ] && rm -rf ${est}/Clases
 	[ -f /usr/local/bin/umfs.sh ] && rm -rf /usr/local/bin/umfs.sh
  	[ -f /usr/local/bin/smu.sh ] && rm -rf /usr/local/bin/smu.sh
 	[ -f /etc/polkit-1/localauthority/50-local.d/10-estudiante-policy.pkla ] && \
@@ -145,7 +146,7 @@ version() {
 	[[ "$(date +%d)" == 07 && "$(date +%m)" == 06 ]] && \
 		printf -- "\033[0;32m\t¡La UNLa cumple %s años!\033[0m\n" "${rio}"
 	[[ "$(date +%d)" == 07 && "$(date +%m)" == 06 ]] && printf -- "\t\033[0;32mVersión 1.9.9.5\033[0m\n" || \
-		printf -- "\tVersión 3.0.0.0\n"
+		printf -- "\tVersión 3.0.0.1\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
