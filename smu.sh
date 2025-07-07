@@ -107,6 +107,7 @@ configuracion() {
 	printf -- "\033[0;33m¡Comenzando a configurar esta PC!\033[0m\n"
 	directorios
 	descargas
+ 	editador
 	modificador
 	programas
 	barrido
@@ -118,6 +119,7 @@ actualizacion() {
 	ceroizador
 	directorios
 	descargas
+ 	editador
 	modificador
 	programas
 	barrido
@@ -149,7 +151,7 @@ version() {
 	[[ "$(date +%d)" == 07 && "$(date +%m)" == 06 ]] && \
 		printf -- "\033[0;32m\t¡La UNLa cumple %s años!\033[0m\n" "${rio}"
 	[[ "$(date +%d)" == 07 && "$(date +%m)" == 06 ]] && printf -- "\t\033[0;32mVersión 1.9.9.5\033[0m\n" || \
-		printf -- "\tVersión 3.0.0.3\n"
+		printf -- "\tVersión 3.0.0.4\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
