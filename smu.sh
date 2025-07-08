@@ -24,7 +24,7 @@ directorios() {
 		[ ! -d "${est}"/Clases ] && su estudiante --command="mkdir --parents \"${est}\"/Clases"
 		printf -- "\033[0;32m¡Se crearon los directorios!\033[0m\n"
 	else
-		[ ! -d "${est}"/Clases ] && mkdir --parents "${est}"/Clases &> /dev/null
+		[ ! -d "${est}"/Clases ] && mkdir --parents "${est}"/Clases &>/dev/null
 	fi
 }
 
@@ -37,8 +37,8 @@ descargas(){
 		su estudiante --command="wget -O \"${est}\"/Clases/.wall.png \"${fon}\""
 		printf -- "\033[0;32m¡Se descargaron los archivos!\033[0m\n"
 	else
-		wget -O "${est}"/Clases/.unla.jpg "${unl}" &> /dev/null
-		wget -O "${est}"/Clases/.wall.png "${fon}" &> /dev/null
+		wget -O "${est}"/Clases/.unla.jpg "${unl}" &>/dev/null
+		wget -O "${est}"/Clases/.wall.png "${fon}" &>/dev/null
 	fi
 
 }
@@ -105,12 +105,12 @@ limpieza() {
 		bleachbit --clean firefox.* google_chrome.* \
 			libreoffice.* system.cache system.clipboard \
 			system.recent_documents system.tmp system.trash \
-			&> /dev/null
+			&>/dev/null
 		directorios
  		descargas
-		cd "${est}" && rm --recursive --force !(Clases|.config|.local) &> /dev/null
-		xdg-user-dirs-update &>/dev/null ; xdg-user-dirs-update --force  &> /dev/null
-		gsettings set org.gnome.desktop.background picture-uri file:///"${est}"/Clases/.wall.png &> /dev/null
+		cd "${est}" && rm --recursive --force !(Clases|.config|.local) &>/dev/null
+		xdg-user-dirs-update &>/dev/null ; xdg-user-dirs-update --force  &>/dev/null
+		gsettings set org.gnome.desktop.background picture-uri file:///"${est}"/Clases/.wall.png
 	fi
 }
 
@@ -167,7 +167,7 @@ version() {
 	clear
 	jp2a --colors --size=40x20 "${est}"/Clases/.unla.jpg
 	printf -- "smu - Script Multifunción de la UNLa\n"
-	printf -- "\tVersión 3.0.0.7\n"
+	printf -- "\tVersión 3.0.0.8\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
