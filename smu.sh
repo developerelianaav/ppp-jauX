@@ -106,10 +106,10 @@ limpieza() {
 			libreoffice.* system.cache system.clipboard \
 			system.recent_documents system.tmp system.trash \
 			&>/dev/null
-		directorios
- 		descargas
 		cd "${est}" && rm --recursive --force !(Clases|.config|.local) &>/dev/null
 		xdg-user-dirs-update &>/dev/null ; xdg-user-dirs-update --force  &>/dev/null
+  		directorios
+ 		descargas
 		gsettings set org.gnome.desktop.background picture-uri file:///"${est}"/Clases/.wall.png
 	fi
 }
@@ -167,7 +167,7 @@ version() {
 	clear
 	jp2a --colors --size=40x20 "${est}"/Clases/.unla.jpg
 	printf -- "smu - Script Multifunción de la UNLa\n"
-	printf -- "\tVersión 3.0.0.8\n"
+	printf -- "\tVersión 3.0.0.9\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
