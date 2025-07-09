@@ -10,7 +10,6 @@ shopt -s extglob
 fon="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/wall.png?raw=true"
 unl="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/unla.jpg?raw=true"
 
-apa="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/pkg.list"
 plk="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/60-estudiante.conf"
 pro="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/profile"
 
@@ -20,7 +19,6 @@ epc="/etc/polkit-1/localauthority.conf.d"
 directorios() {
 	if [ $(whoami) == "root" ]; then
 		printf -- "\033[0;33m¡Creando directorios!\033[0m\n"
-		[ ! -d /tmp ] && mkdir --parents /tmp
 		[ ! -d "${epc}" ] && mkdir --parents "${epc}"
 		[ ! -d "${est}"/Clases ] && su estudiante --command="mkdir --parents \"${est}\"/Clases"
 		printf -- "\033[0;32m¡Se crearon los directorios!\033[0m\n"
@@ -33,7 +31,6 @@ descargas(){
 	if [ $(whoami) == "root" ]; then
 		printf -- "\033[0;33m¡Descargando archivos!\033[0m\n"
 		wget -O "${epc}"/60-estudiante.conf "${plk}"
-		wget -O /tmp/pkg.list "${apa}"
 		su estudiante --command="wget -O \"${est}\"/.profile \"${pro}\""
 		su estudiante --command="wget -O \"${est}\"/Clases/.unla.jpg \"${unl}\""
 		su estudiante --command="wget -O \"${est}\"/Clases/.wall.png \"${fon}\""
@@ -71,7 +68,8 @@ programas() {
 	printf -- "\033[0;33m¡Instalando los programas!\033[0m\n"
 	cp "${0}" /usr/local/bin/smu.sh
 	apt update && apt upgrade --yes
-	apt install --yes $(awk '{$1=$1}1' /tmp/pkg.list)
+	apt install --yes bleachbit build-essentials \
+		cron curl git jp2a
 	printf -- "\033[0;32m¡Se instalaron los programas!\033[0m\n"
 }
 
@@ -168,7 +166,7 @@ version() {
 	clear
 	jp2a --colors --size=40x20 "${est}"/Clases/.unla.jpg
 	printf -- "smu - Script Multifunción de la UNLa\n"
-	printf -- "\tVersión 4.0.0.1\n"
+	printf -- "\tVersión 4.0.0.2\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
