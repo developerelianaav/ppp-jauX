@@ -68,8 +68,7 @@ programas() {
 	printf -- "\033[0;33m¡Instalando los programas!\033[0m\n"
 	cp "${0}" /usr/local/bin/smu.sh
 	apt update && apt upgrade --yes
-	apt install --yes bleachbit build-essentials \
-		cron curl git jp2a
+	apt install --yes bleachbit jp2a
 	printf -- "\033[0;32m¡Se instalaron los programas!\033[0m\n"
 }
 
@@ -166,7 +165,7 @@ version() {
 	clear
 	jp2a --colors --size=40x20 "${est}"/Clases/.unla.jpg
 	printf -- "smu - Script Multifunción de la UNLa\n"
-	printf -- "\tVersión 4.0.0.2\n"
+	printf -- "\tVersión 4.0.0.3\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
