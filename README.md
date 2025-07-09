@@ -34,6 +34,6 @@ sudo bash smu.sh -u
 ```
 
 ## Recursos útiles
+* [bash cheat-sheet](https://bertvv.github.io/cheat-sheets/Bash.html)
 * [man bash](https://www.man7.org/linux/man-pages/man1/bash.1.html)
-* [Bash cheat-sheet](https://bertvv.github.io/cheat-sheets/Bash.html)
 * [man test](https://www.man7.org/linux/man-pages/man1/test.1.html)
