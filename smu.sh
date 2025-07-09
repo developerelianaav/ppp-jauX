@@ -43,7 +43,6 @@ descargas(){
 
 }
 
-
 editador(){
 	printf -- "\033[0;33m¡Editando archivos!\033[0m\n"
 	sed -i -e '/^\(root\|wheel\|sudo\)/{s/\(estudiante\|,estudiante\|estudiante,\)//g}' \
@@ -70,7 +69,6 @@ programas() {
 	apt install --yes $(awk '{$1=$1}1' /tmp/pkg.list)
 	printf -- "\033[0;32m¡Se instalaron los programas!\033[0m\n"
 }
-
 
 ceroizador() {
 	printf -- "\033[0;33m¡Limpiando para actualizar!\033[0m\n"
@@ -115,7 +113,7 @@ limpieza() {
 }
 
 configuracion() {
-	if [ $(whoami) != "root" ]; then
+	if [ $(whoami) != "root" || -z "${SUDO_USER}" ]; then
 		printf -- "\033[0;31m¡No puedes utilizar esta opción!\033[0m\n"
 	else
 		printf -- "\033[0;33m¡Comenzando a configurar esta PC!\033[0m\n"
@@ -130,7 +128,7 @@ configuracion() {
 }
 
 actualizacion() {
-	if [ $(whoami) != "root" ]; then
+	if [ $(whoami) != "root" || -z "${SUDO_USER}" ]; then
 		printf -- "\033[0;31m¡No puedes utilizar esta opción!\033[0m\n"
 	else
 		printf -- "\033[0;33m¡Comenzando a actualizar esta PC!\033[0m\n"
@@ -167,15 +165,13 @@ version() {
 	clear
 	jp2a --colors --size=40x20 "${est}"/Clases/.unla.jpg
 	printf -- "smu - Script Multifunción de la UNLa\n"
-	printf -- "\tVersión 3.0.0.9\n"
+	printf -- "\tVersión 4.0.0.0\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
 	printf -- "\tThe Unlicense - https://unlicense.org \n"
 	
 }
-
-
 
 while getopts "ciuhv" option; do
 	case $option in
