@@ -10,7 +10,6 @@ en una PPP de la UNLa, que transcurrió entre Junio y Agosto del 2025.
 * R: ```smu.sh``` actualmente automatiza las siguientes tareas:
   1. Limpieza del ```/home/``` del estudiante.
   2. Restricción agresiva del usuario.
-  3. Instalación de algúnos de los programas necesarios para la PPP.
 * P: ¿Qué hay en la carpeta archivos?
 * R: En la carpeta archivos se encuentran archivos, valga la redundancia, que ```smu.sh```
   descarga y utiliza en sus tareas.
