@@ -113,7 +113,7 @@ limpieza() {
 }
 
 configuracion() {
-	if [ $(whoami) != "root" || -z "${SUDO_USER}" ]; then
+	if [[ $(whoami) != "root" || -z "${SUDO_USER}" ]]; then
 		printf -- "\033[0;31m¡No puedes utilizar esta opción!\033[0m\n"
 	else
 		printf -- "\033[0;33m¡Comenzando a configurar esta PC!\033[0m\n"
@@ -128,7 +128,7 @@ configuracion() {
 }
 
 actualizacion() {
-	if [ $(whoami) != "root" || -z "${SUDO_USER}" ]; then
+	if [[ $(whoami) != "root" || -z "${SUDO_USER}" ]]; then
 		printf -- "\033[0;31m¡No puedes utilizar esta opción!\033[0m\n"
 	else
 		printf -- "\033[0;33m¡Comenzando a actualizar esta PC!\033[0m\n"
@@ -165,7 +165,7 @@ version() {
 	clear
 	jp2a --colors --size=40x20 "${est}"/Clases/.unla.jpg
 	printf -- "smu - Script Multifunción de la UNLa\n"
-	printf -- "\tVersión 4.0.0.3\n"
+	printf -- "\tVersión 4.0.0.4\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
