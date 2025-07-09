@@ -12,6 +12,7 @@ unl="https://github.com/developerelianaav/ppp-jauX/blob/main/archivos/unla.jpg?r
 
 apa="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/pkg.list"
 plk="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/60-estudiante.conf"
+pro="https://raw.githubusercontent.com/developerelianaav/ppp-jauX/refs/heads/main/archivos/profile"
 
 est="/home/estudiante"
 epc="/etc/polkit-1/localauthority.conf.d"
@@ -33,10 +34,13 @@ descargas(){
 		printf -- "\033[0;33m¡Descargando archivos!\033[0m\n"
 		wget -O "${epc}"/60-estudiante.conf "${plk}"
 		wget -O /tmp/pkg.list "${apa}"
+		su estudiante --command="wget -O \"${est}\"/.profile \"${pro}\""
 		su estudiante --command="wget -O \"${est}\"/Clases/.unla.jpg \"${unl}\""
 		su estudiante --command="wget -O \"${est}\"/Clases/.wall.png \"${fon}\""
 		printf -- "\033[0;32m¡Se descargaron los archivos!\033[0m\n"
 	else
+		[ -f "${est}"/.profile ] && \
+			wget -O "${est}"/.profile "${pro}" &>/dev/null
 		wget -O "${est}"/Clases/.unla.jpg "${unl}" &>/dev/null
 		wget -O "${est}"/Clases/.wall.png "${fon}" &>/dev/null
 	fi
@@ -49,7 +53,6 @@ editador(){
 	       	/etc/group /etc/gshadow
 	sed -i -e 's/# auth       required   pam_wheel.so/auth       required   pam_wheel.so/g' \
 		/etc/pam.d/su
-	printf -- "/usr/local/bin/smu.sh -c\n" >> "${est}"/.profile
 	printf -- "\033[0;32m¡Se editaron los archivos!\033[0m\n"
 }
 
@@ -57,7 +60,9 @@ modificador() {
 	printf -- "\033[0;33m¡Modificando los permisos de los archivos!\033[0m\n"
 	chmod 755 "${0}"
  	chmod 755 "${epc}"/60-estudiante.conf
-	chown estudiante "${est}"/.profile "${est}"/.bashrc
+	chmod 755 "${est}"/.profile
+	chown estudiante --recursive "${est}"/.bashrc "${est}"/.profile \
+		"${est}"/Clases
 	chattr +i "${est}"/.bashrc "${est}"/.profile
 	printf -- "\033[0;32m¡Se modificaron los permisos de los archivos!\033[0m\n"
 }
@@ -84,9 +89,7 @@ ceroizador() {
 		/etc/pam.d/su
  	[ -d "${est}"/Clases ] && rm --recursive --force "${est}"/Clases
 	chattr -i "${est}"/.profile "${est}"/.bashrc
-	sed -i -e 's/\/usr\/local\/bin\/umfs.sh -c//g' "${est}"/.profile
- 	sed -i -e 's/\/usr\/local\/bin\/smfu.sh -c//g' "${est}"/.profile
- 	sed -i -e 's/\/usr\/local\/bin\/smu.sh -c//g' "${est}"/.profile
+ 	[ -d "${est}"/.profile ] && rm --force "${est}"/.profile
 	printf -- "\033[0;32m¡Se limpió!\033[0m\n"
 }
 
@@ -165,7 +168,7 @@ version() {
 	clear
 	jp2a --colors --size=40x20 "${est}"/Clases/.unla.jpg
 	printf -- "smu - Script Multifunción de la UNLa\n"
-	printf -- "\tVersión 4.0.0.0\n"
+	printf -- "\tVersión 4.0.0.1\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
