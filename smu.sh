@@ -55,9 +55,11 @@ editador(){
 
 modificador() {
 	printf -- "\033[0;33m¡Modificando los permisos de los archivos!\033[0m\n"
+	chmod 700 --recursive /home/"${SUDO_USER}" 
 	chmod 755 "${0}"
  	chmod 755 "${epc}"/60-estudiante.conf
 	chmod 755 "${est}"/.profile
+	chown "${SUDO_USER}" --recursive /home/"${SUDO_USER}"
 	chown estudiante --recursive "${est}"/.bashrc "${est}"/.profile \
 		"${est}"/Clases
 	chattr +i "${est}"/.bashrc "${est}"/.profile
@@ -165,7 +167,7 @@ version() {
 	clear
 	jp2a --colors --size=40x20 "${est}"/Clases/.unla.jpg
 	printf -- "smu - Script Multifunción de la UNLa\n"
-	printf -- "\tVersión 4.0.0.4\n"
+	printf -- "\tVersión 4.0.0.5\n"
 	printf -- "Creado por\n"
 	printf -- "\tEstudiantes de la UNLa - https://www.unla.edu.ar\n" 
 	printf -- "Licencia\n"
